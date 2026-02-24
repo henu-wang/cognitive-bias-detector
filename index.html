@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cognitive Bias Detector - Discover Your Hidden Thinking Patterns</title>
+    <meta name="description" content="Take this interactive quiz to uncover your cognitive biases. 15 realistic scenarios reveal your hidden thinking patterns with personalized tips to improve decision-making.">
+    <meta name="keywords" content="cognitive bias, thinking patterns, decision making, psychology quiz, confirmation bias, anchoring, sunk cost fallacy, mental models">
+    <meta name="author" content="Cognitive Bias Detector">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://henu-wang.github.io/cognitive-bias-detector/">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Cognitive Bias Detector - Discover Your Hidden Thinking Patterns">
+    <meta property="og:description" content="15 realistic scenarios reveal your cognitive biases. Get personalized tips to make better decisions.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://henu-wang.github.io/cognitive-bias-detector/">
+    <meta property="og:image" content="https://henu-wang.github.io/cognitive-bias-detector/og-image.png">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Cognitive Bias Detector Quiz">
+    <meta name="twitter:description" content="Uncover your hidden thinking patterns with 15 realistic decision scenarios.">
+
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>">
+
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg: #0f0f1a;
+            --bg-card: #1a1a2e;
+            --bg-card-hover: #222240;
+            --primary: #6c63ff;
+            --primary-light: #8b83ff;
+            --primary-glow: rgba(108, 99, 255, 0.3);
+            --accent: #00d4aa;
+            --accent-light: #33e0be;
+            --text: #e8e8f0;
+            --text-muted: #8888aa;
+            --text-dim: #555577;
+            --danger: #ff6b6b;
+            --warning: #ffd93d;
+            --success: #6bcb77;
+            --radius: 16px;
+            --radius-sm: 10px;
+            --shadow: 0 8px 32px rgba(0,0,0,0.3);
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Ambient background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at 20% 50%, rgba(108,99,255,0.08) 0%, transparent 50%),
+                        radial-gradient(ellipse at 80% 20%, rgba(0,212,170,0.06) 0%, transparent 50%),
+                        radial-gradient(ellipse at 50% 80%, rgba(255,107,107,0.05) 0%, transparent 50%);
+            animation: ambientShift 20s ease-in-out infinite alternate;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        @keyframes ambientShift {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(-3%, 3%) rotate(3deg); }
+        }
+
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 24px 20px;
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ---- HERO / START SCREEN ---- */
+        .screen { display: none; animation: fadeSlideIn 0.5s ease; }
+        .screen.active { display: flex; flex-direction: column; }
+
+        @keyframes fadeSlideIn {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeSlideOut {
+            from { opacity: 1; transform: translateY(0); }
+            to { opacity: 0; transform: translateY(-24px); }
+        }
+
+        .hero {
+            text-align: center;
+            padding: 60px 0 40px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .hero-icon {
+            font-size: 72px;
+            margin-bottom: 24px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+
+        .hero h1 {
+            font-size: 2.4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-light), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 520px;
+            margin: 0 auto 40px;
+        }
+
+        .hero .subtitle {
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .hero .subtitle span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 16px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), #5a52d5);
+            color: white;
+            box-shadow: 0 4px 24px var(--primary-glow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(108, 99, 255, 0.5);
+        }
+
+        .btn-primary:active { transform: translateY(0); }
+
+        .btn-secondary {
+            background: var(--bg-card);
+            color: var(--text);
+            border: 1px solid rgba(108, 99, 255, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--primary);
+        }
+
+        .btn-sm {
+            padding: 10px 24px;
+            font-size: 0.9rem;
+        }
+
+        /* ---- PROGRESS BAR ---- */
+        .progress-container {
+            margin-bottom: 32px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .progress-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .progress-count {
+            font-size: 0.85rem;
+            color: var(--primary-light);
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .progress-track {
+            width: 100%;
+            height: 8px;
+            background: rgba(108, 99, 255, 0.12);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 4px;
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 40px;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3));
+            border-radius: 4px;
+        }
+
+        /* ---- QUESTION CARD ---- */
+        .question-card {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 36px 32px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(108, 99, 255, 0.08);
+            flex: 1;
+        }
+
+        .question-category {
+            display: inline-block;
+            padding: 4px 14px;
+            background: rgba(108, 99, 255, 0.12);
+            color: var(--primary-light);
+            border-radius: 20px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 16px;
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            line-height: 1.5;
+            margin-bottom: 28px;
+            color: var(--text);
+        }
+
+        .choices {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .choice {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 16px 20px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: left;
+            font-size: 0.95rem;
+            color: var(--text);
+            line-height: 1.5;
+        }
+
+        .choice:hover {
+            background: rgba(108, 99, 255, 0.08);
+            border-color: rgba(108, 99, 255, 0.25);
+            transform: translateX(4px);
+        }
+
+        .choice:active { transform: translateX(2px); }
+
+        .choice.selected {
+            background: rgba(108, 99, 255, 0.15);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 1px var(--primary);
+        }
+
+        .choice-letter {
+            flex-shrink: 0;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(108, 99, 255, 0.15);
+            color: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-top: 1px;
+            transition: var(--transition);
+        }
+
+        .choice.selected .choice-letter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .choice-text { flex: 1; }
+
+        .question-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 28px;
+            gap: 12px;
+        }
+
+        .btn-nav {
+            padding: 12px 28px;
+            border-radius: 50px;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-back {
+            background: transparent;
+            color: var(--text-muted);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .btn-back:hover { background: rgba(255,255,255,0.05); color: var(--text); }
+
+        .btn-next {
+            background: linear-gradient(135deg, var(--primary), #5a52d5);
+            color: white;
+            box-shadow: 0 2px 16px var(--primary-glow);
+        }
+
+        .btn-next:hover { box-shadow: 0 4px 24px rgba(108,99,255,0.5); transform: translateY(-1px); }
+        .btn-next:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
+
+        /* ---- RESULTS SCREEN ---- */
+        .results-header {
+            text-align: center;
+            padding: 40px 0 32px;
+        }
+
+        .results-header h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, var(--primary-light), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .results-header p {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        .bias-card {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 28px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(108,99,255,0.08);
+            box-shadow: var(--shadow);
+            animation: slideUp 0.6s ease both;
+        }
+
+        .bias-card:nth-child(1) { animation-delay: 0.1s; }
+        .bias-card:nth-child(2) { animation-delay: 0.25s; }
+        .bias-card:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .bias-rank {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 16px;
+        }
+
+        .rank-badge {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+
+        .rank-1 { background: linear-gradient(135deg, #ffd700, #ffaa00); color: #1a1a2e; }
+        .rank-2 { background: linear-gradient(135deg, #c0c0c0, #a0a0b0); color: #1a1a2e; }
+        .rank-3 { background: linear-gradient(135deg, #cd7f32, #b07020); color: #1a1a2e; }
+
+        .bias-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .bias-score-bar {
+            height: 6px;
+            background: rgba(108,99,255,0.12);
+            border-radius: 3px;
+            margin: 12px 0 16px;
+            overflow: hidden;
+        }
+
+        .bias-score-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 0;
+        }
+
+        .rank-1-bar { background: linear-gradient(90deg, #ffd700, #ffaa00); }
+        .rank-2-bar { background: linear-gradient(90deg, #c0c0c0, #8888aa); }
+        .rank-3-bar { background: linear-gradient(90deg, #cd7f32, #b07020); }
+
+        .bias-description {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .bias-tip {
+            background: rgba(0, 212, 170, 0.08);
+            border-left: 3px solid var(--accent);
+            padding: 14px 18px;
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+        }
+
+        .bias-tip-label {
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 6px;
+        }
+
+        .bias-tip p {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            line-height: 1.55;
+        }
+
+        /* All biases summary */
+        .all-biases {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 28px;
+            margin-top: 12px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(108,99,255,0.08);
+            animation: slideUp 0.6s ease 0.55s both;
+        }
+
+        .all-biases h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 18px;
+            color: var(--text);
+        }
+
+        .bias-mini {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 0;
+        }
+
+        .bias-mini + .bias-mini { border-top: 1px solid rgba(255,255,255,0.04); }
+
+        .bias-mini-name {
+            flex: 1;
+            font-size: 0.88rem;
+            color: var(--text-muted);
+        }
+
+        .bias-mini-bar {
+            width: 120px;
+            height: 4px;
+            background: rgba(108,99,255,0.1);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .bias-mini-fill {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 2px;
+            transition: width 1s ease 0.7s;
+            width: 0;
+        }
+
+        .bias-mini-count {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            width: 20px;
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* Share / Actions */
+        .results-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin: 32px 0;
+            flex-wrap: wrap;
+            animation: slideUp 0.6s ease 0.7s both;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 32px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--bg-card);
+            color: var(--accent);
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+            border: 1px solid rgba(0,212,170,0.3);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 100;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* ---- FOOTER ---- */
+        footer {
+            text-align: center;
+            padding: 40px 0 24px;
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            margin-top: auto;
+        }
+
+        footer a {
+            color: var(--primary-light);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        footer a:hover { color: var(--accent); }
+
+        /* ---- RESPONSIVE ---- */
+        @media (max-width: 600px) {
+            .container { padding: 16px 14px; }
+            .hero h1 { font-size: 1.8rem; }
+            .hero p { font-size: 1rem; }
+            .hero .subtitle { gap: 12px; }
+            .question-card { padding: 24px 20px; }
+            .question-text { font-size: 1.05rem; }
+            .choice { padding: 14px 16px; font-size: 0.9rem; }
+            .results-header h2 { font-size: 1.6rem; }
+            .bias-card { padding: 22px 18px; }
+            .bias-mini-bar { width: 80px; }
+            .btn { padding: 14px 32px; font-size: 1rem; }
+            .results-actions { flex-direction: column; align-items: center; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- START SCREEN -->
+        <div id="start-screen" class="screen active">
+            <div class="hero">
+                <div class="hero-icon">🧠</div>
+                <h1>Cognitive Bias Detector</h1>
+                <p>We all have hidden thinking patterns that shape our decisions. Answer 15 real-world scenarios to discover which cognitive biases influence you the most.</p>
+                <div class="subtitle">
+                    <span>&#9202; 5 minutes</span>
+                    <span>&#128202; 15 scenarios</span>
+                    <span>&#127919; 12 biases tracked</span>
+                </div>
+                <div>
+                    <button class="btn btn-primary" onclick="startQuiz()">
+                        Start the Quiz &rarr;
+                    </button>
+                </div>
+            </div>
+            <footer>
+                Learn about decision-making principles at <a href="https://keeprule.com/en/principles" target="_blank" rel="noopener">KeepRule</a>
+            </footer>
+        </div>
+
+        <!-- QUIZ SCREEN -->
+        <div id="quiz-screen" class="screen">
+            <div class="progress-container">
+                <div class="progress-header">
+                    <span class="progress-label">Progress</span>
+                    <span class="progress-count" id="progress-count">1 / 15</span>
+                </div>
+                <div class="progress-track">
+                    <div class="progress-fill" id="progress-fill" style="width: 6.67%"></div>
+                </div>
+            </div>
+
+            <div class="question-card" id="question-card">
+                <div class="question-category" id="question-category"></div>
+                <div class="question-text" id="question-text"></div>
+                <div class="choices" id="choices"></div>
+            </div>
+
+            <div class="question-nav">
+                <button class="btn-nav btn-back" id="btn-back" onclick="prevQuestion()">&#8592; Back</button>
+                <button class="btn-nav btn-next" id="btn-next" onclick="nextQuestion()" disabled>Next &rarr;</button>
+            </div>
+
+            <footer>
+                Learn about decision-making principles at <a href="https://keeprule.com/en/principles" target="_blank" rel="noopener">KeepRule</a>
+            </footer>
+        </div>
+
+        <!-- RESULTS SCREEN -->
+        <div id="results-screen" class="screen">
+            <div class="results-header">
+                <div class="hero-icon">&#128161;</div>
+                <h2>Your Bias Profile</h2>
+                <p>Here are the cognitive biases that most influence your thinking</p>
+            </div>
+
+            <div id="top-biases"></div>
+
+            <div class="all-biases" id="all-biases">
+                <h3>Full Bias Breakdown</h3>
+                <div id="all-biases-list"></div>
+            </div>
+
+            <div class="results-actions">
+                <button class="btn btn-primary btn-sm" onclick="copyResults()">&#128203; Copy Results</button>
+                <button class="btn btn-secondary btn-sm" onclick="retakeQuiz()">&#128260; Retake Quiz</button>
+            </div>
+
+            <footer>
+                Learn about decision-making principles at <a href="https://keeprule.com/en/principles" target="_blank" rel="noopener">KeepRule</a>
+            </footer>
+        </div>
+    </div>
+
+    <div class="toast" id="toast">Copied to clipboard!</div>
+
+    <script>
+    const BIASES = {
+        confirmation: {
+            name: "Confirmation Bias",
+            icon: "🔍",
+            description: "You tend to seek out and favor information that confirms your existing beliefs while ignoring contradictory evidence. This can create echo chambers in your thinking and lead to overconfidence in flawed conclusions.",
+            tip: "Actively seek out opposing viewpoints before making decisions. Ask yourself: 'What evidence would change my mind?' Try assigning someone the role of devil's advocate in group discussions."
+        },
+        anchoring: {
+            name: "Anchoring Bias",
+            icon: "⚓",
+            description: "You rely too heavily on the first piece of information you encounter (the 'anchor') when making decisions. Initial numbers, prices, or impressions disproportionately shape your subsequent judgments.",
+            tip: "Before evaluating any offer or estimate, independently research the topic. Consider multiple reference points rather than fixating on the first number presented. Pause and reset your baseline when you notice an anchor."
+        },
+        sunk_cost: {
+            name: "Sunk Cost Fallacy",
+            icon: "🕳️",
+            description: "You continue investing time, money, or effort into something because of what you've already spent, rather than evaluating future value objectively. Past investments cloud your judgment about the best path forward.",
+            tip: "When deciding whether to continue, ask: 'If I were starting fresh today with no prior investment, would I choose this path?' Focus on future costs and benefits, not past ones."
+        },
+        availability: {
+            name: "Availability Heuristic",
+            icon: "📰",
+            description: "You judge the likelihood of events based on how easily examples come to mind, rather than on actual statistics. Vivid, recent, or emotionally charged events feel more probable than they really are.",
+            tip: "Look up actual statistics before making probability judgments. Ask yourself whether your estimate is based on data or just memorable examples. Be especially cautious after exposure to dramatic news stories."
+        },
+        loss_aversion: {
+            name: "Loss Aversion",
+            icon: "🛡️",
+            description: "You feel the pain of losses roughly twice as intensely as the pleasure of equivalent gains. This asymmetry makes you overly cautious, causing you to miss valuable opportunities to avoid potential downsides.",
+            tip: "Reframe decisions in terms of total outcomes rather than gains versus losses. Ask: 'What is the expected value over many similar decisions?' Consider what you lose by not acting."
+        },
+        status_quo: {
+            name: "Status Quo Bias",
+            icon: "🔄",
+            description: "You have a strong preference for the current state of affairs and resist change, even when alternatives might be objectively better. The comfort of familiarity outweighs the potential benefits of improvement.",
+            tip: "Periodically audit your default choices. Ask: 'If I were choosing for the first time, would I pick what I have now?' Set calendar reminders to review recurring decisions with fresh eyes."
+        },
+        dunning_kruger: {
+            name: "Dunning-Kruger Effect",
+            icon: "🎭",
+            description: "You may overestimate your competence in areas where your knowledge is limited, or underestimate it where you are skilled. Limited experience can create a blind spot about what you don't know.",
+            tip: "Seek honest feedback from domain experts. Before forming strong opinions on a topic, map out what you know and what you don't. Practice saying 'I don't know enough about this yet.'"
+        },
+        bandwagon: {
+            name: "Bandwagon Effect",
+            icon: "🎪",
+            description: "You adopt beliefs or behaviors because many others do, regardless of the underlying evidence. Social proof and popularity become substitutes for independent evaluation.",
+            tip: "Before following a popular trend, ask: 'Would I still choose this if nobody else was doing it?' Evaluate the actual evidence independent of how many people agree. Seek out minority viewpoints."
+        },
+        framing: {
+            name: "Framing Effect",
+            icon: "🖼️",
+            description: "Your decisions change based on how information is presented rather than on the information itself. The same facts framed as gains versus losses, or with different wording, lead you to different conclusions.",
+            tip: "Restate the problem multiple ways before deciding. Convert percentages to absolute numbers and vice versa. Ask: 'Would my decision change if this were worded differently?'"
+        },
+        overconfidence: {
+            name: "Overconfidence Bias",
+            icon: "🎯",
+            description: "You consistently overestimate the accuracy of your predictions and the reliability of your knowledge. Your confidence exceeds your actual accuracy, leading to inadequate preparation for uncertainty.",
+            tip: "Track your predictions and compare them to outcomes over time. Widen your confidence intervals. Before committing to a plan, ask: 'What could go wrong that I'm not considering?'"
+        },
+        hindsight: {
+            name: "Hindsight Bias",
+            icon: "🔮",
+            description: "After learning an outcome, you believe you 'knew it all along.' This distorts your memory of past predictions and makes you overconfident in your ability to foresee future events.",
+            tip: "Write down your predictions before you learn the outcome. Keep a decision journal documenting your reasoning at the time, not after the fact. Review old entries to calibrate your actual foresight."
+        },
+        recency: {
+            name: "Recency Bias",
+            icon: "⏰",
+            description: "You give disproportionate weight to recent events and experiences when making judgments. The latest data point overshadows longer-term patterns and base rates, skewing your perspective.",
+            tip: "Deliberately look at longer time horizons before deciding. Ask: 'Is this a pattern or just the latest data point?' Use written records and historical data rather than relying on memory alone."
+        }
+    };
+
+    const QUESTIONS = [
+        {
+            category: "Investment Decision",
+            text: "You've held a stock for two years that has dropped 40%. A trusted analyst says the company's fundamentals have permanently worsened. What do you do?",
+            choices: [
+                { text: "Hold on -- I've already lost so much, I need to wait for it to recover to at least break even.", bias: "sunk_cost" },
+                { text: "Sell immediately and reinvest based on the new analysis, regardless of my past losses.", bias: "loss_aversion" },
+                { text: "Check what most people in online forums are doing with this stock and follow the majority.", bias: "bandwagon" },
+                { text: "Keep it because changing my portfolio feels risky and uncomfortable right now.", bias: "status_quo" }
+            ]
+        },
+        {
+            category: "Hiring Decision",
+            text: "You're interviewing candidates. The first one asks for a $120K salary. The next candidate is equally qualified and asks for $95K. How do you evaluate the second offer?",
+            choices: [
+                { text: "$95K sounds like a bargain compared to the $120K -- I'd lean toward hiring them quickly.", bias: "anchoring" },
+                { text: "I'd research market rates independently before evaluating either number.", bias: null },
+                { text: "The lower ask makes me slightly suspicious -- maybe they're not as confident in their skills.", bias: "framing" },
+                { text: "I'd go with my gut feeling about who's better. I'm usually good at reading people.", bias: "overconfidence" }
+            ]
+        },
+        {
+            category: "Health Choices",
+            text: "After a plane crash makes headlines, you have a flight next week. Statistically, flying is far safer than driving. What's your instinct?",
+            choices: [
+                { text: "I'd seriously consider driving instead -- plane crashes are clearly a real danger.", bias: "availability" },
+                { text: "I'd fly as planned. One incident doesn't change the overall safety statistics.", bias: null },
+                { text: "I'd check if most of my friends are still flying and base my decision on that.", bias: "bandwagon" },
+                { text: "I already had a slight bad feeling about this trip -- this confirms I should cancel.", bias: "confirmation" }
+            ]
+        },
+        {
+            category: "Business Strategy",
+            text: "Your company's software has been used for 8 years. A competitor's newer solution is measurably better and similarly priced. What do you recommend?",
+            choices: [
+                { text: "Stick with our current system. Switching is disruptive and what we have works fine.", bias: "status_quo" },
+                { text: "We've invested so much in the current system, it would be wasteful to switch now.", bias: "sunk_cost" },
+                { text: "Evaluate total cost and benefit of switching versus staying over the next 5 years.", bias: null },
+                { text: "Wait and see if most companies in our industry make the switch first.", bias: "bandwagon" }
+            ]
+        },
+        {
+            category: "Personal Finance",
+            text: "A financial advisor presents two retirement plans with identical expected returns. Plan A is described as '90% chance of meeting your goals.' Plan B is described as '10% chance of falling short.' Which feels more appealing?",
+            choices: [
+                { text: "Plan A feels safer and more appealing to me.", bias: "framing" },
+                { text: "They sound the same to me -- I'd dig into the actual portfolio details.", bias: null },
+                { text: "Plan B scares me. I'd rather avoid any plan that mentions 'falling short.'", bias: "loss_aversion" },
+                { text: "I'd pick whichever plan my advisor recommends most confidently.", bias: "dunning_kruger" }
+            ]
+        },
+        {
+            category: "Workplace Feedback",
+            text: "You receive a performance review with 8 pieces of praise and 2 critical comments. Where does your mind focus afterward?",
+            choices: [
+                { text: "I keep thinking about the 2 negatives -- they overshadow everything positive.", bias: "loss_aversion" },
+                { text: "The critical feedback confirms what I already suspected about my weak areas.", bias: "confirmation" },
+                { text: "I focus on the 8 positives -- I knew I was doing well overall.", bias: "overconfidence" },
+                { text: "I weigh all 10 points proportionally and plan improvements for the 2 areas.", bias: null }
+            ]
+        },
+        {
+            category: "Market Prediction",
+            text: "The stock market has been rising for 6 consecutive months. A colleague asks for your outlook. What's your take?",
+            choices: [
+                { text: "It will probably keep going up -- the recent trend is strong and momentum matters.", bias: "recency" },
+                { text: "I'm pretty confident I can predict the direction based on current patterns.", bias: "overconfidence" },
+                { text: "I'd look at historical cycles, valuations, and multiple indicators before guessing.", bias: null },
+                { text: "If most analysts say it's going up, I'd go with the consensus view.", bias: "bandwagon" }
+            ]
+        },
+        {
+            category: "Project Management",
+            text: "Your team's project is 6 months in and 50% over budget. The remaining work will likely cost another 50% overage. A simpler alternative exists that would achieve 80% of the goals at 30% of the remaining cost. What do you advocate?",
+            choices: [
+                { text: "We've come too far to stop now. Let's push through and finish the original plan.", bias: "sunk_cost" },
+                { text: "Switch to the simpler alternative -- future costs and benefits are what matter.", bias: null },
+                { text: "I think we can pull it off on budget from here. I've seen us rally before.", bias: "overconfidence" },
+                { text: "Stick with the current plan -- changing course midway feels chaotic.", bias: "status_quo" }
+            ]
+        },
+        {
+            category: "News Consumption",
+            text: "You hold a strong opinion on a political issue. When browsing articles, which do you naturally gravitate toward?",
+            choices: [
+                { text: "Articles from sources I trust that usually align with my perspective.", bias: "confirmation" },
+                { text: "Whatever is trending or most shared on social media right now.", bias: "bandwagon" },
+                { text: "I deliberately seek out articles presenting the opposing view first.", bias: null },
+                { text: "The most recent articles, since older coverage is probably outdated.", bias: "recency" }
+            ]
+        },
+        {
+            category: "Negotiation",
+            text: "You're buying a used car listed at $25,000. You know the fair market value is around $20,000. The seller drops the price to $22,500 and says 'final offer.' How do you feel?",
+            choices: [
+                { text: "That's $2,500 off -- feels like a meaningful discount. I'd probably take it.", bias: "anchoring" },
+                { text: "It's still $2,500 above fair value. I'd counter at $20,000 based on my research.", bias: null },
+                { text: "I'd feel bad pushing harder -- I don't want to lose the deal entirely.", bias: "loss_aversion" },
+                { text: "If the seller seems confident it's worth $22,500, maybe my research is off.", bias: "dunning_kruger" }
+            ]
+        },
+        {
+            category: "Team Decision",
+            text: "After a product launch fails, your team discusses what happened. Looking back, the warning signs seem obvious. What's your honest internal reaction?",
+            choices: [
+                { text: "I kind of saw this coming -- the signs were there if you looked carefully.", bias: "hindsight" },
+                { text: "We should document what we actually predicted beforehand versus what happened.", bias: null },
+                { text: "The recent negative results are making me doubt everything about our strategy.", bias: "recency" },
+                { text: "We should have listened to the majority view on the team, which was cautious.", bias: "bandwagon" }
+            ]
+        },
+        {
+            category: "Risk Assessment",
+            text: "You're choosing between two equally qualified surgeons. Surgeon A says '95% of my patients have excellent outcomes.' Surgeon B says '1 in 20 of my patients has complications.' Who would you lean toward?",
+            choices: [
+                { text: "Surgeon A -- 95% success sounds much better and more reassuring.", bias: "framing" },
+                { text: "They're saying the same thing, so I'd compare other factors like experience and reviews.", bias: null },
+                { text: "Surgeon B is being more honest about risks, which actually concerns me more.", bias: "loss_aversion" },
+                { text: "I'd go with whichever surgeon more people in my network recommend.", bias: "bandwagon" }
+            ]
+        },
+        {
+            category: "Self-Assessment",
+            text: "You're asked to rate your driving ability compared to the average driver. Where would you honestly place yourself?",
+            choices: [
+                { text: "Definitely above average -- I'm a careful and experienced driver.", bias: "overconfidence" },
+                { text: "Probably about average, though it's hard to judge objectively.", bias: null },
+                { text: "I'd base it on my recent driving experiences -- no incidents lately, so above average.", bias: "recency" },
+                { text: "I've never had a major accident, which I think proves I'm a skilled driver.", bias: "hindsight" }
+            ]
+        },
+        {
+            category: "Career Choice",
+            text: "You've spent 7 years building expertise in a field you no longer enjoy. A career change would mean starting over but pursuing something you're passionate about. What weighs most on your mind?",
+            choices: [
+                { text: "I can't throw away 7 years of experience -- that investment should count for something.", bias: "sunk_cost" },
+                { text: "Changing careers feels terrifying. The potential loss of income and status is paralyzing.", bias: "loss_aversion" },
+                { text: "I focus on future fulfillment and earning potential in the new field.", bias: null },
+                { text: "I'd look at what successful people in my circle are doing and follow their lead.", bias: "bandwagon" }
+            ]
+        },
+        {
+            category: "Everyday Judgment",
+            text: "A friend tells you about a miracle supplement backed by testimonials and one small study. Your doctor says there's no strong evidence for it. How do you process this?",
+            choices: [
+                { text: "The testimonials are compelling -- those are real people with real results.", bias: "availability" },
+                { text: "My friend knows me well. If they think it works, it probably has merit.", bias: "confirmation" },
+                { text: "I'd look for large, peer-reviewed studies before forming an opinion.", bias: null },
+                { text: "I'm pretty good at evaluating health claims -- I can tell if something works.", bias: "dunning_kruger" }
+            ]
+        }
+    ];
+
+    let currentQuestion = 0;
+    let answers = new Array(QUESTIONS.length).fill(null);
+
+    function startQuiz() {
+        document.getElementById('start-screen').classList.remove('active');
+        document.getElementById('quiz-screen').classList.add('active');
+        renderQuestion();
+    }
+
+    function renderQuestion() {
+        const q = QUESTIONS[currentQuestion];
+        document.getElementById('question-category').textContent = q.category;
+        document.getElementById('question-text').textContent = q.text;
+        document.getElementById('progress-count').textContent = `${currentQuestion + 1} / ${QUESTIONS.length}`;
+        document.getElementById('progress-fill').style.width = `${((currentQuestion + 1) / QUESTIONS.length) * 100}%`;
+
+        const choicesEl = document.getElementById('choices');
+        const letters = ['A', 'B', 'C', 'D'];
+        choicesEl.innerHTML = q.choices.map((c, i) => `
+            <div class="choice ${answers[currentQuestion] === i ? 'selected' : ''}" onclick="selectChoice(${i})">
+                <div class="choice-letter">${letters[i]}</div>
+                <div class="choice-text">${c.text}</div>
+            </div>
+        `).join('');
+
+        document.getElementById('btn-back').style.visibility = currentQuestion === 0 ? 'hidden' : 'visible';
+        const btnNext = document.getElementById('btn-next');
+        btnNext.disabled = answers[currentQuestion] === null;
+        btnNext.textContent = currentQuestion === QUESTIONS.length - 1 ? 'See Results →' : 'Next →';
+
+        // Animate card
+        const card = document.getElementById('question-card');
+        card.style.animation = 'none';
+        card.offsetHeight; // reflow
+        card.style.animation = 'fadeSlideIn 0.4s ease';
+    }
+
+    function selectChoice(index) {
+        answers[currentQuestion] = index;
+        const choices = document.querySelectorAll('.choice');
+        choices.forEach((c, i) => c.classList.toggle('selected', i === index));
+        document.getElementById('btn-next').disabled = false;
+    }
+
+    function nextQuestion() {
+        if (answers[currentQuestion] === null) return;
+        if (currentQuestion < QUESTIONS.length - 1) {
+            currentQuestion++;
+            renderQuestion();
+        } else {
+            showResults();
+        }
+    }
+
+    function prevQuestion() {
+        if (currentQuestion > 0) {
+            currentQuestion--;
+            renderQuestion();
+        }
+    }
+
+    function calculateResults() {
+        const scores = {};
+        Object.keys(BIASES).forEach(b => scores[b] = 0);
+
+        answers.forEach((ans, qIndex) => {
+            if (ans !== null) {
+                const bias = QUESTIONS[qIndex].choices[ans].bias;
+                if (bias && scores[bias] !== undefined) {
+                    scores[bias]++;
+                }
+            }
+        });
+
+        return Object.entries(scores)
+            .map(([key, count]) => ({ key, count, ...BIASES[key] }))
+            .sort((a, b) => b.count - a.count);
+    }
+
+    function showResults() {
+        document.getElementById('quiz-screen').classList.remove('active');
+        document.getElementById('results-screen').classList.add('active');
+
+        const results = calculateResults();
+        const maxScore = Math.max(results[0].count, 1);
+        const top3 = results.slice(0, 3).filter(r => r.count > 0);
+
+        // Render top 3
+        const topEl = document.getElementById('top-biases');
+        topEl.innerHTML = top3.map((r, i) => `
+            <div class="bias-card">
+                <div class="bias-rank">
+                    <div class="rank-badge rank-${i + 1}">#${i + 1}</div>
+                    <div class="bias-name">${r.icon} ${r.name}</div>
+                </div>
+                <div class="bias-score-bar">
+                    <div class="bias-score-fill rank-${i + 1}-bar" data-width="${(r.count / maxScore) * 100}%"></div>
+                </div>
+                <div class="bias-description">${r.description}</div>
+                <div class="bias-tip">
+                    <div class="bias-tip-label">How to counteract it</div>
+                    <p>${r.tip}</p>
+                </div>
+            </div>
+        `).join('');
+
+        // Render all biases mini bars
+        const allEl = document.getElementById('all-biases-list');
+        allEl.innerHTML = results.map(r => `
+            <div class="bias-mini">
+                <div class="bias-mini-name">${r.icon} ${r.name}</div>
+                <div class="bias-mini-bar">
+                    <div class="bias-mini-fill" data-width="${maxScore > 0 ? (r.count / maxScore) * 100 : 0}%"></div>
+                </div>
+                <div class="bias-mini-count">${r.count}</div>
+            </div>
+        `).join('');
+
+        // Animate bars after a short delay
+        requestAnimationFrame(() => {
+            setTimeout(() => {
+                document.querySelectorAll('.bias-score-fill, .bias-mini-fill').forEach(el => {
+                    el.style.width = el.dataset.width;
+                });
+            }, 100);
+        });
+
+        // Scroll to top
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function copyResults() {
+        const results = calculateResults();
+        const top3 = results.slice(0, 3).filter(r => r.count > 0);
+
+        let text = "🧠 My Cognitive Bias Profile\n\n";
+        top3.forEach((r, i) => {
+            text += `#${i + 1} ${r.icon} ${r.name} (score: ${r.count})\n`;
+        });
+        text += "\nTake the quiz: https://henu-wang.github.io/cognitive-bias-detector/";
+        text += "\n\nLearn more about decision-making: https://keeprule.com/en/principles";
+
+        navigator.clipboard.writeText(text).then(() => {
+            const toast = document.getElementById('toast');
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2500);
+        }).catch(() => {
+            // Fallback
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+            const toast = document.getElementById('toast');
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2500);
+        });
+    }
+
+    function retakeQuiz() {
+        currentQuestion = 0;
+        answers = new Array(QUESTIONS.length).fill(null);
+        document.getElementById('results-screen').classList.remove('active');
+        document.getElementById('quiz-screen').classList.add('active');
+        renderQuestion();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (!document.getElementById('quiz-screen').classList.contains('active')) return;
+        const key = e.key;
+        if (key >= '1' && key <= '4') {
+            const idx = parseInt(key) - 1;
+            if (idx < QUESTIONS[currentQuestion].choices.length) selectChoice(idx);
+        }
+        if (key === 'ArrowRight' || key === 'Enter') nextQuestion();
+        if (key === 'ArrowLeft') prevQuestion();
+    });
+    </script>
+</body>
+</html>
